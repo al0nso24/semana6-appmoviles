@@ -9,6 +9,8 @@ export default function ToDoList() {
 
     const contadorTareas = tasks.length; //esta variable es el contador de tareas
 
+    const [duplicado, setDuplicado] = useState(false);
+
     useEffect(() => {
         const cargar = async () => {
             const data = await AsyncStorage.getItem("tasks");
@@ -30,13 +32,24 @@ export default function ToDoList() {
     }, [tasks]);
 
     const agregarTarea = () => {
-        if (task.trim() === "") {
+        const texto = task.trim();
+        if (texto === "") {
             return;
         }
 
+        const yaExiste = tasks.some(
+            (t) => t.text.trim().toLowerCase() === texto.toLowerCase()
+        )
+
+        if(yaExiste){
+            setDuplicado(true);
+            return;
+        }
+        setDuplicado(false); //si la tarea es diferente, el mensaje se va
+
         const nuevaTarea = {
             id: Date.now().toString(),
-            text: task.trim(),
+            text: texto,
             createdAt: new Date().toISOString(),
             completed: false,
         };
@@ -81,6 +94,8 @@ export default function ToDoList() {
                 <Text style={styles.textoBoton}>Agregar</Text>
             </TouchableOpacity>
             
+            {duplicado && <Text style={styles.duplicado}>Esa tarea ya existe</Text>}
+
             {contadorTareas >= 1 && contadorTareas <= 3 ? (
                 <Text style={styles.alertaTextoVerde}>Solo tienes {contadorTareas} tarea</Text>
             ) : contadorTareas > 3 && contadorTareas <= 5 ? (
@@ -285,4 +300,9 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         borderRadius: 6,
     },
+
+    duplicado: {
+        fontWeight: "bold",
+        marginBottom: 20
+    }
 });
