@@ -159,8 +159,8 @@ export default function ToDoList() {
 
 const styles = StyleSheet.create({
     contenedor: {
-        paddingTop: 70,
-        paddingBottom: 70,
+        paddingTop: 130,
+        paddingBottom: 75,
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
