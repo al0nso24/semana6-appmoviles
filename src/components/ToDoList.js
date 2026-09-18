@@ -9,7 +9,7 @@ export default function ToDoList() {
 
     const contadorTareas = tasks.length; //esta variable es el contador de tareas
 
-    const [duplicado, setDuplicado] = useState(false);
+    const [duplicado, setDuplicado] = useState(false); //evitar duplicados
 
     useEffect(() => {
         const cargar = async () => {
@@ -45,7 +45,6 @@ export default function ToDoList() {
             setDuplicado(true);
             return;
         }
-        setDuplicado(false); //si la tarea es diferente, el mensaje se va
 
         const nuevaTarea = {
             id: Date.now().toString(),
@@ -55,6 +54,7 @@ export default function ToDoList() {
         };
 
         setTasks((prev) => [...prev, nuevaTarea]);
+        setDuplicado(false); //si la tarea es diferente, el mensaje se va
         setTask("");
     };
 
