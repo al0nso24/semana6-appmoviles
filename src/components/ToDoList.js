@@ -74,8 +74,12 @@ export default function ToDoList() {
                 <Text style={styles.textoBoton}>Agregar</Text>
             </TouchableOpacity>
 
-            {tasks.length > 5 && (
-                <Text style={styles.alertaTexto}>Demasiadas tareas por hacer :'v</Text>
+            {tasks.length >= 1 && tasks.length <= 3 ? (
+                <Text style={styles.alertaTextoVerde}>Solo tienes {tasks.length} tarea</Text>
+            ) : tasks.length > 3 && tasks.length <= 5 ? (
+                <Text style={styles.alertaTextoAmarillo}>Tienes {tasks.length} tareas :D</Text>
+            ) : tasks.length > 5 && (
+                <Text style={styles.alertaTextoRojo}>Demasiadas tareas por hacer</Text>
             )}
 
             <View style={styles.filtrosRow}>
@@ -177,8 +181,20 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
 
-    alertaTexto: {
+    alertaTextoRojo: {
         color: "#B91C1C",
+        fontWeight: "bold",
+        marginBottom: 40,
+    },
+
+    alertaTextoVerde: {
+        color: "green",
+        fontWeight: "bold",
+        marginBottom: 40,
+    },
+
+    alertaTextoAmarillo: {
+        color: "yellow",
         fontWeight: "bold",
         marginBottom: 40,
     },
