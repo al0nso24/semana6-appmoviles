@@ -7,6 +7,8 @@ export default function ToDoList() {
     const [tasks, setTasks] = useState([]);
     const [filtro, setFiltro] = useState("Todas");
 
+    const contadorTareas = tasks.length; //esta variable es el contador de tareas
+
     useEffect(() => {
         const cargar = async () => {
             const data = await AsyncStorage.getItem("tasks");
@@ -56,8 +58,13 @@ export default function ToDoList() {
     };
 
     const tareasFiltradas = tasks.filter((tarea) => {
-        if (filtro === "Pendientes") return !tarea.completed;
-        if (filtro === "Completadas") return tarea.completed;
+        if (filtro === "Pendientes"){
+            return !tarea.completed;
+        }
+        if (filtro === "Completadas"){
+            return tarea.completed;
+        }
+
         return true;
     });
 
@@ -73,12 +80,12 @@ export default function ToDoList() {
             <TouchableOpacity style={styles.agregar} onPress={agregarTarea}>
                 <Text style={styles.textoBoton}>Agregar</Text>
             </TouchableOpacity>
-
-            {tasks.length >= 1 && tasks.length <= 3 ? (
-                <Text style={styles.alertaTextoVerde}>Solo tienes {tasks.length} tarea</Text>
-            ) : tasks.length > 3 && tasks.length <= 5 ? (
-                <Text style={styles.alertaTextoAmarillo}>Tienes {tasks.length} tareas :D</Text>
-            ) : tasks.length > 5 && (
+            
+            {contadorTareas >= 1 && contadorTareas <= 3 ? (
+                <Text style={styles.alertaTextoVerde}>Solo tienes {contadorTareas} tarea</Text>
+            ) : contadorTareas > 3 && contadorTareas <= 5 ? (
+                <Text style={styles.alertaTextoAmarillo}>Tienes {contadorTareas} tareas :D</Text>
+            ) : contadorTareas > 5 && (
                 <Text style={styles.alertaTextoRojo}>Demasiadas tareas por hacer</Text>
             )}
 
@@ -152,7 +159,8 @@ export default function ToDoList() {
 
 const styles = StyleSheet.create({
     contenedor: {
-        paddingTop: 131,
+        paddingTop: 70,
+        paddingBottom: 70,
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
@@ -182,7 +190,7 @@ const styles = StyleSheet.create({
     },
 
     alertaTextoRojo: {
-        color: "#B91C1C",
+        color: "red",
         fontWeight: "bold",
         marginBottom: 40,
     },
@@ -194,7 +202,7 @@ const styles = StyleSheet.create({
     },
 
     alertaTextoAmarillo: {
-        color: "yellow",
+        color: "#ffd000",
         fontWeight: "bold",
         marginBottom: 40,
     },
